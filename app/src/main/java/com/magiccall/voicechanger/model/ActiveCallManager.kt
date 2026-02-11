@@ -15,8 +15,9 @@ import com.magiccall.voicechanger.audio.VoiceEffect
  *   1. User dials number → TelecomManager places real SIM call
  *   2. MagicInCallService receives Call object → stored here
  *   3. InCallActivity observes state and controls the call
- *   4. AudioEngine runs alongside the call, processing mic → effect → speaker
- *   5. On speakerphone, the other party hears the effect through acoustic coupling
+ *   4. AudioEngine runs in callMode — uses VOICE_COMMUNICATION source
+ *      so it can capture mic audio during an active cellular call
+ *   5. Processed audio plays through speaker → other party hears it
  */
 object ActiveCallManager {
 
@@ -28,6 +29,10 @@ object ActiveCallManager {
 
     private val _amplitude = MutableLiveData(0f)
     val amplitude: LiveData<Float> = _amplitude
+
+    /** True when speakerphone is on (managed by InCallActivity) */
+    private val _speakerOn = MutableLiveData(false)
+    val speakerOn: LiveData<Boolean> = _speakerOn
 
     private var audioEngine: AudioEngine? = null
     private var currentEffect: VoiceEffect? = null
@@ -89,18 +94,29 @@ object ActiveCallManager {
         audioEngine?.setEffect(effect)
     }
 
+    /**
+     * Start the audio engine in call mode.
+     * Call mode uses VOICE_COMMUNICATION audio source + USAGE_VOICE_COMMUNICATION
+     * which allows mic capture during active cellular calls and routes processed
+     * audio through the communication audio path.
+     */
     private fun startVoiceEffect() {
         audioEngine?.let { engine ->
+            // Enable call mode — switches to VOICE_COMMUNICATION path
+            engine.callMode = true
             engine.setEffect(currentEffect)
             engine.onAmplitudeUpdate = { amp ->
                 _amplitude.postValue(amp)
             }
             engine.start()
+            // Speaker is auto-enabled by AudioEngine.setupCallMode()
+            _speakerOn.postValue(true)
         }
     }
 
     private fun stopVoiceEffect() {
         audioEngine?.stop()
+        _speakerOn.postValue(false)
     }
 
     fun toggleMute(): Boolean {
@@ -109,6 +125,7 @@ object ActiveCallManager {
             engine.stop()
             true // now muted
         } else {
+            engine.callMode = true
             engine.setEffect(currentEffect)
             engine.start()
             false // unmuted

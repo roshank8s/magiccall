@@ -62,13 +62,7 @@ class InCallActivity : AppCompatActivity() {
             isSpeaker = !isSpeaker
             val audioManager = getSystemService(AudioManager::class.java)
             audioManager.isSpeakerphoneOn = isSpeaker
-            binding.btnSpeakerIcon.setColorFilter(
-                ContextCompat.getColor(
-                    this,
-                    if (isSpeaker) R.color.primary else R.color.text_secondary
-                )
-            )
-            binding.btnSpeakerLabel.text = if (isSpeaker) "Speaker On" else "Speaker Off"
+            updateSpeakerUI()
         }
 
         binding.btnHold.setOnClickListener {
@@ -163,6 +157,12 @@ class InCallActivity : AppCompatActivity() {
             binding.callAmplitudeBar.progress = (amp * 100).toInt()
         }
 
+        // AudioEngine auto-enables speaker in call mode — sync UI
+        ActiveCallManager.speakerOn.observe(this) { on ->
+            isSpeaker = on
+            updateSpeakerUI()
+        }
+
         // Set initial effect label
         val presetId = ActiveCallManager.selectedPresetId
         val preset = VoicePreset.getAll().find { it.id == presetId }
@@ -209,6 +209,16 @@ class InCallActivity : AppCompatActivity() {
             Call.STATE_CONNECTING -> "Connecting..."
             else -> "..."
         }
+    }
+
+    private fun updateSpeakerUI() {
+        binding.btnSpeakerIcon.setColorFilter(
+            ContextCompat.getColor(
+                this,
+                if (isSpeaker) R.color.primary else R.color.text_secondary
+            )
+        )
+        binding.btnSpeakerLabel.text = if (isSpeaker) "Speaker On" else "Speaker Off"
     }
 
     private fun formatPhoneDisplay(number: String): String {
