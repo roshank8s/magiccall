@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="24dp">
+
+    <!-- Call status -->
+    <TextView
+        android:id="@+id/callStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="Calling..."
+        android:textColor="@color/primary"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Avatar circle -->
+    <ImageView
+        android:id="@+id/callerAvatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/circle_avatar"
+        android:contentDescription="Caller"
+        android:padding="24dp"
+        android:src="@drawable/ic_call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/callStatus"
+        app:tint="@android:color/white" />
+
+    <!-- Caller number -->
+    <TextView
+        android:id="@+id/callerNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textColor="@color/text_primary"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/callerAvatar" />
+
+    <!-- Voice effect name -->
+    <TextView
+        android:id="@+id/callerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:textColor="@color/primary"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/callerNumber" />
+
+    <!-- Call timer -->
+    <TextView
+        android:id="@+id/callTimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="00:00"
+        android:textColor="@color/text_secondary"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/callerName" />
+
+    <!-- Amplitude visualization -->
+    <ProgressBar
+        android:id="@+id/callAmplitudeBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/amplitude_bar"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/callTimer" />
+
+    <!-- Live effect switcher -->
+    <TextView
+        android:id="@+id/switchEffectLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Switch Voice (live)"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp"
+        app:layout_constraintTop_toBottomOf="@id/callAmplitudeBar" />
+
+    <HorizontalScrollView
+        android:id="@+id/effectSwitchScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/switchEffectLabel">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/effectSwitchGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true" />
+
+    </HorizontalScrollView>
+
+    <!-- Call control buttons -->
+    <LinearLayout
+        android:id="@+id/callControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/btnEndCall">
+
+        <!-- Mute button -->
+        <LinearLayout
+            android:id="@+id/btnMute"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/btnMuteIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Mute"
+                android:src="@drawable/ic_mic"
+                app:tint="@color/text_primary" />
+
+            <TextView
+                android:id="@+id/btnMuteLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Mute"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Speaker button -->
+        <LinearLayout
+            android:id="@+id/btnSpeaker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/btnSpeakerIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Speaker"
+                android:src="@drawable/ic_echo"
+                app:tint="@color/primary" />
+
+            <TextView
+                android:id="@+id/btnSpeakerLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Speaker On"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- End call button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnEndCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="End Call"
+        android:src="@drawable/ic_call_end"
+        app:backgroundTint="@color/stop_button"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@android:color/white" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
