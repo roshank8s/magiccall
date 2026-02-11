@@ -8,9 +8,9 @@ import android.media.AudioRecord
 import android.media.AudioTrack
 import android.media.MediaRecorder
 import android.media.AudioAttributes
-import android.os.Build
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.*
+import kotlin.coroutines.coroutineContext
 
 /**
  * Core audio engine that captures microphone input, applies voice effects
@@ -93,7 +93,7 @@ class AudioEngine(private val context: Context) {
     private suspend fun processAudioLoop() {
         val readBuffer = ShortArray(bufferSize / 2)
 
-        while (isRunning && isActive) {
+        while (isRunning && coroutineContext.isActive) {
             val readCount = audioRecord?.read(readBuffer, 0, readBuffer.size) ?: -1
             if (readCount <= 0) continue
 
@@ -125,12 +125,12 @@ class AudioEngine(private val context: Context) {
         try {
             audioRecord?.stop()
             audioRecord?.release()
-        } catch (_: Exception) {}
+        } catch (e: Exception) { /* ignored */ }
 
         try {
             audioTrack?.stop()
             audioTrack?.release()
-        } catch (_: Exception) {}
+        } catch (e: Exception) { /* ignored */ }
 
         audioRecord = null
         audioTrack = null
