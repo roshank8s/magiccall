@@ -11,7 +11,7 @@
         android:id="@+id/callStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:gravity="center"
         android:text="Calling..."
         android:textColor="@color/primary"
@@ -40,18 +40,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
+        android:text="Unknown"
         android:textColor="@color/text_primary"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/callerAvatar" />
 
-    <!-- Voice effect name -->
+    <!-- Active effect name -->
     <TextView
-        android:id="@+id/callerName"
+        android:id="@+id/activeEffectName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:gravity="center"
+        android:text="Normal Voice"
         android:textColor="@color/primary"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/callerNumber" />
@@ -66,7 +68,7 @@
         android:text="00:00"
         android:textColor="@color/text_secondary"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/callerName" />
+        app:layout_constraintTop_toBottomOf="@id/activeEffectName" />
 
     <!-- Amplitude visualization -->
     <ProgressBar
@@ -81,12 +83,12 @@
         android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@id/callTimer" />
 
-    <!-- Live effect switcher -->
+    <!-- Live effect switcher label -->
     <TextView
         android:id="@+id/switchEffectLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Switch Voice (live)"
         android:textColor="@color/text_secondary"
@@ -114,12 +116,12 @@
         android:id="@+id/callControls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/btnEndCall">
+        app:layout_constraintBottom_toTopOf="@id/bottomButtons">
 
-        <!-- Mute button -->
+        <!-- Mute -->
         <LinearLayout
             android:id="@+id/btnMute"
             android:layout_width="0dp"
@@ -148,7 +150,7 @@
 
         </LinearLayout>
 
-        <!-- Speaker button -->
+        <!-- Speaker -->
         <LinearLayout
             android:id="@+id/btnSpeaker"
             android:layout_width="0dp"
@@ -164,14 +166,43 @@
                 android:layout_height="32dp"
                 android:contentDescription="Speaker"
                 android:src="@drawable/ic_echo"
-                app:tint="@color/primary" />
+                app:tint="@color/text_secondary" />
 
             <TextView
                 android:id="@+id/btnSpeakerLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Speaker On"
+                android:text="Speaker Off"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Hold -->
+        <LinearLayout
+            android:id="@+id/btnHold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/btnHoldIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Hold"
+                android:src="@drawable/ic_hold"
+                app:tint="@color/text_primary" />
+
+            <TextView
+                android:id="@+id/btnHoldLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Hold"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
 
@@ -179,19 +210,40 @@
 
     </LinearLayout>
 
-    <!-- End call button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnEndCall"
-        android:layout_width="wrap_content"
+    <!-- Answer + End call buttons -->
+    <LinearLayout
+        android:id="@+id/bottomButtons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:contentDescription="End Call"
-        android:src="@drawable/ic_call_end"
-        app:backgroundTint="@color/stop_button"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tint="@android:color/white" />
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Answer (only for incoming) -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:contentDescription="Answer"
+            android:src="@drawable/ic_call"
+            android:visibility="gone"
+            app:backgroundTint="@color/start_button"
+            app:fabSize="normal"
+            app:tint="@android:color/white" />
+
+        <!-- End call -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnEndCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="End Call"
+            android:src="@drawable/ic_call_end"
+            app:backgroundTint="@color/stop_button"
+            app:fabSize="normal"
+            app:tint="@android:color/white" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
