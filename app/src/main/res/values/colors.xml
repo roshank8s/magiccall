@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#6C63FF</color>
+    <color name="primary_dark">#5A52D5</color>
+    <color name="primary_variant">#3F37C9</color>
+    <color name="secondary">#FF6584</color>
+    <color name="background">#0F0F1A</color>
+    <color name="surface">#1A1A2E</color>
+    <color name="card_background">#1E1E32</color>
+    <color name="effect_normal">#252540</color>
+    <color name="effect_selected">#6C63FF</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#A0A0B8</color>
+    <color name="credits_gold">#FFD700</color>
+    <color name="start_button">#4CAF50</color>
+    <color name="stop_button">#F44336</color>
+    <color name="status_active">#4CAF50</color>
+    <color name="status_inactive">#666680</color>
+    <color name="amplitude_start">#6C63FF</color>
+    <color name="amplitude_end">#FF6584</color>
+</resources>

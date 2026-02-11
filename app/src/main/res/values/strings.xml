@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MagicCall</string>
+    <string name="start">START</string>
+    <string name="stop">STOP</string>
+    <string name="status_ready">Ready</string>
+    <string name="status_active">Voice Changer Active</string>
+    <string name="no_effect_selected">No effect selected</string>
+    <string name="choose_effect">Choose a voice effect below</string>
+    <string name="voice_effects">Voice Effects</string>
+    <string name="buy_credits">+ Buy</string>
+    <string name="mic_permission_required">Microphone permission is required</string>
+    <string name="select_effect_first">Select a voice effect first</string>
+    <string name="not_enough_credits">Not enough credits!</string>
+</resources>
